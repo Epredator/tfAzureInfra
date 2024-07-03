@@ -15,8 +15,8 @@ provider "azurerm" {
 
 # Create a resource group
 resource "azurerm_resource_group" "main_rg" {
-  name     = "App-VM-RG"
-  location = "East US"
+  name     = var.rg_name
+  location = var.location
 }
 
 
@@ -37,7 +37,7 @@ resource "azurerm_virtual_network" "main_vnet" {
   name                = "App_VNET"
   location            = azurerm_resource_group.main_rg.location
   resource_group_name = azurerm_resource_group.main_rg.name
-  address_space       = ["10.1.0.0/16"]
+  address_space       =  [var.vnet_addressspace] 
 
   subnet {
     name           = "dev_subnet"
@@ -118,7 +118,7 @@ resource "azurerm_network_interface_security_group_association" "nsg_association
 # }
 
 resource "azurerm_windows_virtual_machine" "app01vm" {
-  name                = "app02vm"
+  name                = var.vm_name
   resource_group_name = azurerm_resource_group.main_rg.name
   location            = azurerm_resource_group.main_rg.location
   size                = "Standard_B2s"
@@ -126,8 +126,8 @@ resource "azurerm_windows_virtual_machine" "app01vm" {
     azurerm_network_interface.app01vm_nic.id,
   ]
 
-  admin_username = "adminuser"
-  admin_password = "TheAnswerIs42aaa."
+  admin_username = var.admin_username
+  admin_password = var.admin_password
 
   os_disk {
     caching              = "ReadWrite"
