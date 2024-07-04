@@ -34,3 +34,19 @@ type = string
 description = "Administrator’s password"
 default = "TheAnswerIs42."
 } 
+    
+variable "subnets_addresses" { 
+type = list(string) 
+description = "Addresses of subnets"
+default     = ["10.1.1.0/24", "10.1.2.0/24"] 
+} 
+        
+variable "tags" { 
+type = map(string) 
+description = "Tags for resources"
+default = { 
+"environment" = "DEV", 
+"project" = "NewDevHome"
+"team" = "Software House"
+} 
+} 
