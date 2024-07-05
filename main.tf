@@ -37,7 +37,7 @@ resource "azurerm_virtual_network" "main_vnet" {
   name                = "App_VNET"
   location            = azurerm_resource_group.main_rg.location
   resource_group_name = azurerm_resource_group.main_rg.name
-  address_space       =  [var.vnet_addressspace] 
+  address_space       = [var.vnet_addressspace]
 
   subnet {
     name           = "dev_subnet"
