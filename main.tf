@@ -139,6 +139,32 @@ resource "azurerm_windows_virtual_machine" "app01vm" {
     sku       = "win11-22h2-ent"
     version   = "latest"
   }
+  tags = var.tags
+}
+
+resource "azurerm_managed_disk" "disk_data" {
+  name                 = var.disk_names[0]
+  location             = azurerm_resource_group.main_rg.location
+  resource_group_name  = azurerm_resource_group.main_rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 1
+}
+
+resource "azurerm_managed_disk" "disk_log" {
+  name                 = var.disk_names[1]
+  location             = azurerm_resource_group.main_rg.location
+  resource_group_name  = azurerm_resource_group.main_rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 1
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "disk_data_attachment" {
+  managed_disk_id    = azurerm_managed_disk.disk_data.id
+  virtual_machine_id = azurerm_windows_virtual_machine.app01vm.id
+  lun                = var.disk_lunes[1]
+  caching            = var.disk_caches[1]
 }
 
 output "public_ip" {
