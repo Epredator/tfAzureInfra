@@ -41,16 +41,6 @@ variable "subnets_addresses" {
   default     = ["10.1.1.0/24", "10.1.2.0/24"]
 }
 
-variable "tags" {
-  type        = map(string)
-  description = "Tags for resources"
-  default = {
-    "environment" = "DEV",
-    "project"     = "NewDevHome"
-    "team"        = "Software House"
-  }
-}
-
 variable "disk_names" {
   type        = list(string)
   description = "Names for disks"
@@ -68,12 +58,33 @@ variable "disk_caches" {
   description = "Cache setting for disks"
   default     = ["ReadWrite", "None"]
 }
+
+variable "disks" {
+  type        = map(any)
+  description = "Managed disks specifications"
+  default = {
+    disk_data = {
+      lun   = "10",
+      cache = "ReadWrite",
+      size  = 1
+    },
+    disk_log = {
+      lun   = "11",
+      cache = "None",
+      size  = 1
+    }
+  }
+}
+
+
 variable "tags" {
   type        = map(string)
   description = "Tags"
   default = {
+    "project"      = "NewDevHome"
     "Owner"        = "Epredator"
     "Organization" = "Etroya"
     "Environment"  = "Development"
+    "team"         = "Software House"
   }
-} 
+}
