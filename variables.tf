@@ -88,3 +88,10 @@ variable "tags" {
     "team"         = "Software House"
   }
 }
+
+
+variable "app_code" {
+  type        = string
+  description = "Application code"
+  default     = "hr"
+}

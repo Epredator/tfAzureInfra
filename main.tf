@@ -186,6 +186,14 @@ resource "azurerm_virtual_machine_data_disk_attachment" "disk_data_attachment" {
 #   caching            = var.disk_caches[1]
 # }
 
+locals {
+  prefix = "${var.app_code}-${var.vm_name}"
+  tags = {
+    create_date = formatdate("YYYY-MM-DD", timestamp())
+    create_time = formatdate("HH:mm:ss", timestamp())
+  }
+}
+
 output "public_ip" {
   value = azurerm_public_ip.app01vm_pub_ip.ip_address
 }
