@@ -52,14 +52,14 @@ resource "azurerm_virtual_network" "main_vnet" {
 
 
 resource "azurerm_public_ip" "app01vm_pub_ip" {
-  name                = "app01vm_ip"
+  name                = "${local.prefix}-ip"
   resource_group_name = azurerm_resource_group.main_rg.name
   location            = azurerm_resource_group.main_rg.location
   allocation_method   = "Dynamic"
 }
 
 resource "azurerm_network_interface" "app01vm_nic" {
-  name                = "app01vm-nic"
+  name                = "${local.prefix}-nic"
   location            = azurerm_resource_group.main_rg.location
   resource_group_name = azurerm_resource_group.main_rg.name
   ip_configuration {
@@ -71,7 +71,7 @@ resource "azurerm_network_interface" "app01vm_nic" {
 }
 
 resource "azurerm_network_security_group" "nsg_rdp" {
-  name                = "app01vm-nsg"
+  name                = "${local.prefix}-nsg"
   location            = azurerm_resource_group.main_rg.location
   resource_group_name = azurerm_resource_group.main_rg.name
   security_rule {
@@ -118,7 +118,7 @@ resource "azurerm_network_interface_security_group_association" "nsg_association
 # }
 
 resource "azurerm_windows_virtual_machine" "app01vm" {
-  name                = var.vm_name
+  name                = "${local.prefix}-vm"
   resource_group_name = azurerm_resource_group.main_rg.name
   location            = azurerm_resource_group.main_rg.location
   size                = "Standard_B2s"
@@ -139,7 +139,7 @@ resource "azurerm_windows_virtual_machine" "app01vm" {
     sku       = "win11-22h2-ent"
     version   = "latest"
   }
-  tags = var.tags
+  tags = merge(var.tags, local.tags)
 }
 
 # resource "azurerm_managed_disk" "disk_data" {
@@ -162,7 +162,7 @@ resource "azurerm_windows_virtual_machine" "app01vm" {
 
 resource "azurerm_managed_disk" "disks" {
   for_each             = var.disks
-  name                 = each.key
+  name                 = "${local.prefix}-${each.key}"
   location             = azurerm_resource_group.main_rg.location
   resource_group_name  = azurerm_resource_group.main_rg.name
   storage_account_type = "Standard_LRS"
