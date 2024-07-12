@@ -21,12 +21,23 @@ variable "vm_name" {
   type        = string
   description = "Name of virtual machine"
   default     = "app01vm"
+  validation {
+    condition     = !strcontains(lower(var.vm_name), "vm")
+    error_message = "Initial name of the virtual machine cannot contain substring ‘vm’."
+  }
 }
+
 
 variable "admin_username" {
   type        = string
   description = "Administrator user name"
   default     = "adminuser"
+  validation {
+    condition     = lower(var.admin_username) == var.admin_username
+    error_message = "Admin user name can use only lowercase letters."
+  }
+
+
 }
 
 variable "admin_password" {
