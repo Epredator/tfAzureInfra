@@ -21,6 +21,7 @@ variable "vm_name" {
   type        = string
   description = "Name of virtual machine"
   default     = "app01vm"
+  sensitive   = true 
   validation {
     condition     = !strcontains(lower(var.vm_name), "vm")
     error_message = "Initial name of the virtual machine cannot contain substring ‘vm’."
