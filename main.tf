@@ -195,12 +195,12 @@ locals {
 }
 
 output "public_ip" {
-  value = azurerm_public_ip.app01vm_pub_ip.ip_address
+  value       = azurerm_public_ip.app01vm_pub_ip.ip_address
   description = "Server IP"
 }
 
-output "admin_username" { 
-value = azurerm_linux_virtual_machine.dev01vm.admin_username 
-description = "Admin name" 
-sensitive   = true 
-} 
+output "admin_username" {
+  value       = azurerm_linux_virtual_machine.dev01vm.admin_username
+  description = "Admin name"
+  sensitive   = true
+}

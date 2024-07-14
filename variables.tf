@@ -21,7 +21,7 @@ variable "vm_name" {
   type        = string
   description = "Name of virtual machine"
   default     = "app01vm"
-  sensitive   = true 
+  sensitive   = true
   validation {
     condition     = !strcontains(lower(var.vm_name), "vm")
     error_message = "Initial name of the virtual machine cannot contain substring ‘vm’."
@@ -101,9 +101,30 @@ variable "tags" {
   }
 }
 
-
 variable "app_code" {
   type        = string
   description = "Application code"
   default     = "hr"
+}
+
+output "public_ip2" {
+  value       = azurerm_public_ip.app01vm_pub_ip.ip_address
+  description = "IP address of server"
+}
+
+output "nsg" {
+  value       = azurerm_network_security_group.nsg_rdp.name
+  description = "NSG name attached to the network interface"
+  sensitive   = true
+}
+
+output "admin_username2" {
+  value       = azurerm_windows_virtual_machine.app01vm.admin_username
+  description = "Admin user name"
+}
+
+output "admin_password" {
+  value       = azurerm_windows_virtual_machine.app01vm.admin_password
+  description = "Admin password"
+  sensitive   = true
 }
