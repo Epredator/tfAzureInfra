@@ -128,3 +128,9 @@ output "admin_password" {
   description = "Admin password"
   sensitive   = true
 }
+
+variable "number_vm" {
+type = number
+description = "Number of machines to create"
+default = 2  
+}
