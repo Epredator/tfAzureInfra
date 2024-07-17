@@ -51,11 +51,12 @@ resource "azurerm_virtual_network" "main_vnet" {
 }
 
 
-resource "azurerm_public_ip" "app01vm_pub_ip" {
-  name                = "${local.prefix}-ip"
+resource "azurerm_public_ip" "vm_pub_ip" {
+  count               = var.number_vm
+  name                = "${local.prefix}-${format("%02s", count.index)}-ip"
   resource_group_name = azurerm_resource_group.main_rg.name
   location            = azurerm_resource_group.main_rg.location
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "app01vm_nic" {

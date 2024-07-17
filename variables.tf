@@ -130,7 +130,7 @@ output "admin_password" {
 }
 
 variable "number_vm" {
-type = number
-description = "Number of machines to create"
-default = 2  
+  type        = number
+  description = "Number of machines to create"
+  default     = 2
 }
